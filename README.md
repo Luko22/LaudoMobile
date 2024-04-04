@@ -1,4 +1,4 @@
-This repo is for a robotic car project I am doing on my own
+This repo is for a robotic car project I am doing on my own/n
 I plan to gradually give the vehicle automated characteristics
 
 Step 1: Make it functional
