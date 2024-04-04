@@ -14,14 +14,14 @@ Step 1: Make it functional
   1.4: Uploading simple iterated code
 
 
-step 2: making it controllable
+Step 2: making it controllable
   
   2.1: make it wireless
 
   2.2: make it responsive
 
 
-step 3: giving it senses 
+Step 3: giving it senses 
   
   3.1: spacial awareness and obstacle detection
   
@@ -32,7 +32,7 @@ step 3: giving it senses
   3.4: making it multiaxially drivable
 
 
-step 4: gíving it autonomy
+Step 4: gíving it autonomy
   
   4.1: Object and obstacle detection
   
