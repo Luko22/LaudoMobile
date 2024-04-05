@@ -85,3 +85,10 @@ void speedControl() {
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
 }
+
+
+/*
+Concerns:
+- very little pmw pins left on arduino
+- 
+*/
