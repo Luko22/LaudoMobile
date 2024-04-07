@@ -86,6 +86,8 @@ void speedControl() {
     digitalWrite(in4, LOW);
 }
 
+/*Set up function to enable wirless connection*/
+
 
 /*
 Concerns:
