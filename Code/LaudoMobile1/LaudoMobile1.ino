@@ -30,12 +30,35 @@ void setup() {
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
+
+    initDrive(100);
+
+    // pinMode(LED_BUILTIN, OUTPUT);
+    // //built in led to confirm setup function
+    // digitalWrite(LED_BUILTIN, HIGH);
+    // delay(1000);
+    // digitalWrite(LED_BUILTIN, LOW);
+    // delay(500);
+    // digitalWrite(LED_BUILTIN, HIGH);
+    // delay(1000);
+    // digitalWrite(LED_BUILTIN, LOW);
+    // delay(500);
+
 }
 
 void loop() {
 
-    analogWrite(enA, 100);
-    analogWrite(enB, 100);
+  
+  
+    // directionControl();
+    // delay(1000);
+    // speedControl();
+    // delay(1000);
+}
+
+void initDrive(int s){
+  analogWrite(enA, s);
+  analogWrite(enB, s);
  
   // motor A CW ^ (forward)
     digitalWrite(in1, LOW);
@@ -45,37 +68,9 @@ void loop() {
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
 
-    delay(2000);
+    delay(1000);
 
-//  // Turn off motors
-//     digitalWrite(in1, LOW);
-//     digitalWrite(in2, LOW);
-//     digitalWrite(in3, LOW);
-//     digitalWrite(in4, LOW);
-//     delay(2000);
-
-//   // motor A CCW  (backwards)
-//     digitalWrite(in1, HIGH);
-//     digitalWrite(in2, LOW);
-
-//   // motor B CCW (backwards)
-//     digitalWrite(in3, LOW);
-//     digitalWrite(in4, HIGH);
-
-//     delay(1000);
-
-
-
- // // motor A CW ^
-  //   digitalWrite(in1, LOW);
-  //   digitalWrite(in2, HIGH);
-
-  // // motor B CCW
-  //   digitalWrite(in3, HIGH);
-  //   digitalWrite(in4, LOW);
-    
-
-    // Turn off motors
+ // Turn off motors
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
@@ -83,10 +78,22 @@ void loop() {
     delay(2000);
 
 
-    // directionControl();
-    // delay(1000);
-    // speedControl();
-    // delay(1000);
+ // motor A CCW (backwards)
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+
+  // motor B CCW ^ (backwards)
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+
+    delay(1000);
+
+ // Turn off motors
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
+    delay(2000);
 }
 
 
@@ -116,7 +123,6 @@ void directionControl() {
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
 }
-
 
 
 void speedControl() {
