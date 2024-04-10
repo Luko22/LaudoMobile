@@ -1,5 +1,4 @@
-//Laudo Lukoki
-//Step 1: Make it functional
+//Step 2: making it controllable
 /*Read and took information from:
 https://electrosome.com/interfacing-l298n-motor-driver-arduino-uno/
 */
@@ -16,6 +15,8 @@ connected to pin 11, pin 10*/
 int enB = 3;
 int in3 = 11;
 int in4 = 10;
+
+//add joysick macros
 
 //only runs once
 void setup() {
@@ -49,6 +50,7 @@ void setup() {
 
 void loop() {
 
+  //map
   
   
     // directionControl();
@@ -151,9 +153,6 @@ void speedControl() {
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
 }
-
-/*Set up function to enable wirless connection*/
-
 
 /*
 Concerns:
