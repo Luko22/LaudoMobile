@@ -1,62 +1,3 @@
-//Laudo Lukoki
-//Step 1: Make it functional
-/*Read and took information from:
-https://electrosome.com/interfacing-l298n-motor-driver-arduino-uno/
-*/
-
-/* Motor A connections: 
-in1 and in2 pins are used to control the direction of Motor A
-connected to pin 13, pin 12*/
-int enA = 9;
-int in1 = 13;
-int in2 = 12;
-/* Motor B connections: 
-in3 and in4 pins are used to control the direction of Motor B
-connected to pin 11, pin 10*/
-int enB = 3;
-int in3 = 11;
-int in4 = 10;
-
-//only runs once
-void setup() {
-
-    pinMode(enA, OUTPUT);
-    pinMode(enB, OUTPUT);
-    pinMode(in1, OUTPUT);
-    pinMode(in2, OUTPUT);
-    pinMode(in3, OUTPUT);
-    pinMode(in4, OUTPUT);
-	
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
-
-    initDrive(100);
-
-    // pinMode(LED_BUILTIN, OUTPUT);
-    // //built in led to confirm setup function
-    // digitalWrite(LED_BUILTIN, HIGH);
-    // delay(1000);
-    // digitalWrite(LED_BUILTIN, LOW);
-    // delay(500);
-    // digitalWrite(LED_BUILTIN, HIGH);
-    // delay(1000);
-    // digitalWrite(LED_BUILTIN, LOW);
-    // delay(500);
-
-}
-
-void loop() {
-
-  
-  
-    // directionControl();
-    // delay(1000);
-    // speedControl();
-    // delay(1000);
-}
-
 void initDrive(int s){
   analogWrite(enA, s);
   analogWrite(enB, s);
@@ -69,32 +10,32 @@ void initDrive(int s){
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
 
-    delay(1000);
+    delay(500);
 
  // Turn off motors
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
-    delay(2000);
+    delay(1000);
 
 
  // motor A CCW (backwards)
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
 
-  // motor B CCW ^ (backwards)
+  // motor B CCW (backwards)
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
 
-    delay(1000);
+    delay(500);
 
  // Turn off motors
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
-    delay(2000);
+    delay(1000);
 }
 
 
@@ -151,9 +92,6 @@ void speedControl() {
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
 }
-
-/*Set up function to enable wirless connection*/
-
 
 /*
 Concerns:

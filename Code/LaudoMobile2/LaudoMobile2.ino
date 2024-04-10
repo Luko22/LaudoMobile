@@ -47,161 +47,97 @@ void setup() {
 }
 
 void loop() {
-  joyposH = analogRead(JoyY);
   joyposV = analogRead(JoyX);
+  joyposH = analogRead(JoyY);
+  
+  int driveD = map(joyposV, 400, 0, 0, 255);
+  int driveB = map(joyposV, 700, 1024, 0, 255);
 
-  int driveD = map(joyposV, 400, 0, 0, 250);
-  int driveB = map(joyposV, 600, 1023, 0, 250);
+  int driveR = map(joyposH, 200, 0, 0, 250);
+  int driveL = map(joyposH, 700, 1024, 0, 250);
+delay(50);
+
 
   Serial.print(joyposH);
   Serial.print("  |  ");
-  Serial.print(joyposV);
+  // Serial.print(joyposV);
+  // Serial.print("  |  ");
+  Serial.print(driveL);
   Serial.print("  |  ");
-  Serial.println(driveD);
-  Serial.print("  |  ");
-  Serial.print(driveB);
-
+  Serial.println(driveR);
+  
+  //Forward and Back
   if(joyposV<400){
     //map then drive forwards
-
     analogWrite(enA, driveD);
     analogWrite(enB, driveD);
-  
+  delay(5);
     // motor A CW ^ (forward)
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
-
     // motor B CW ^ (forward)
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    delay(50);
-    } else if(joyposV>600){
-
+  delay(50);
+    } else if(joyposV>700){
+      //moves back
     analogWrite(enA, driveB);
     analogWrite(enB, driveB);
-  
+  delay(5);
    // motor A CCW (backwards)
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
-
   // motor B CCW (backwards)
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
+  delay(50);
   } else{
     // Turn off motors
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
-    delay(50);
+  delay(50);
   }
+
+
+//Rotation
+  if(joyposH<200){
+    //rot R
+    // analogWrite(enA, driveR);
+    analogWrite(enB, driveR);
   
-  //map
-  
-  
-    // directionControl();
-    // delay(1000);
-    // speedControl();
-    // delay(1000);
-}
-
-void initDrive(int s){
-  analogWrite(enA, s);
-  analogWrite(enB, s);
- 
-  // motor A CW ^ (forward)
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
-
-  // motor B CW ^ (forward)
-    digitalWrite(in3, HIGH);
-    digitalWrite(in4, LOW);
-
-    delay(500);
-
- // Turn off motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
-    delay(1000);
-
-
- // motor A CCW (backwards)
+    // motor A CCW
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
 
-  // motor B CCW (backwards)
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, HIGH);
-
-    delay(500);
-
- // Turn off motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
-    delay(1000);
-}
-
-
-//function
-void directionControl() {
-    // Set motors to maximum speed
-    // PWM value ranges from 0 to 255
-    analogWrite(enA, 255);
-    analogWrite(enB, 255);
-
-    // Turn on motor A & B
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, LOW);
+    // motor B CW ^
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    delay(2000);
-
+    delay(50);
+    } else if(joyposH>700){
+      //rot L
+    analogWrite(enA, driveL);
+    analogWrite(enB, driveL);
+  
+   // motor A CW ^ 
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
+
+  // motor B CCW 
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
-    delay(2000);
-	
-    // Turn off motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
+    delay(50);
+  } 
+  // else{
+  //   // Turn off motors
+  //   digitalWrite(in1, LOW);
+  //   digitalWrite(in2, LOW);
+  //   digitalWrite(in3, LOW);
+  //   digitalWrite(in4, LOW);
+  //   delay(50);
+  // }
+
 }
 
 
-void speedControl() {
-    // Turn on motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, HIGH);
-	
-    for (int i = 0; i < 256; i++) {
-        analogWrite(enA, i);
-        analogWrite(enB, i);
-        delay(20);
-    }
-	
-    for (int i = 255; i >= 0; --i) {
-        analogWrite(enA, i);
-        analogWrite(enB, i);
-        delay(20);
-    }
-	
-    // Now turn off motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
-}
-
-/*
-Concerns:
-- very little pmw pins left on arduino
-- 
-*/
