@@ -14,11 +14,13 @@ Step 1: Make it functional
   1.4: Uploading simple iterated code
 
 
-Step 2: making it controllable
-  
-  2.1: make it wireless
+Step 2: Making it controllable
 
-  2.2: make it responsive
+  2.1: control it tethered
+  
+  2.2: make it wireless
+
+  2.3: make it responsive
 
 
 Step 3: giving it senses 
