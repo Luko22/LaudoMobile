@@ -8,4 +8,4 @@ All files should have:
 
 - PCB design*
 
-* currently learn these skills
+* *currently learn these skills
