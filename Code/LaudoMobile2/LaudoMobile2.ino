@@ -17,9 +17,17 @@ int in3 = 11;
 int in4 = 10;
 
 //add joysick macros
+#define JoyX A0
+#define JoyY A1
+
+int joyposV, joyposH;
 
 //only runs once
 void setup() {
+    Serial.begin(9600);
+
+    pinMode(JoyX, INPUT);
+    pinMode(JoyY, INPUT);
 
     pinMode(enA, OUTPUT);
     pinMode(enB, OUTPUT);
@@ -33,23 +41,61 @@ void setup() {
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
 
+    delay(1000);
     initDrive(100);
-
-    // pinMode(LED_BUILTIN, OUTPUT);
-    // //built in led to confirm setup function
-    // digitalWrite(LED_BUILTIN, HIGH);
-    // delay(1000);
-    // digitalWrite(LED_BUILTIN, LOW);
-    // delay(500);
-    // digitalWrite(LED_BUILTIN, HIGH);
-    // delay(1000);
-    // digitalWrite(LED_BUILTIN, LOW);
-    // delay(500);
 
 }
 
 void loop() {
+  joyposH = analogRead(JoyY);
+  joyposV = analogRead(JoyX);
 
+  int driveD = map(joyposV, 400, 0, 0, 250);
+  int driveB = map(joyposV, 600, 1023, 0, 250);
+
+  Serial.print(joyposH);
+  Serial.print("  |  ");
+  Serial.print(joyposV);
+  Serial.print("  |  ");
+  Serial.println(driveD);
+  Serial.print("  |  ");
+  Serial.print(driveB);
+
+  if(joyposV<400){
+    //map then drive forwards
+
+    analogWrite(enA, driveD);
+    analogWrite(enB, driveD);
+  
+    // motor A CW ^ (forward)
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+
+    // motor B CW ^ (forward)
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+    delay(50);
+    } else if(joyposV>600){
+
+    analogWrite(enA, driveB);
+    analogWrite(enB, driveB);
+  
+   // motor A CCW (backwards)
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+
+  // motor B CCW (backwards)
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+  } else{
+    // Turn off motors
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
+    delay(50);
+  }
+  
   //map
   
   
@@ -71,32 +117,32 @@ void initDrive(int s){
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
 
-    delay(1000);
+    delay(500);
 
  // Turn off motors
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
-    delay(2000);
+    delay(1000);
 
 
  // motor A CCW (backwards)
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
 
-  // motor B CCW ^ (backwards)
+  // motor B CCW (backwards)
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
 
-    delay(1000);
+    delay(500);
 
  // Turn off motors
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
-    delay(2000);
+    delay(1000);
 }
 
 
