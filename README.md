@@ -42,11 +42,11 @@ Step 4: giving it senses
   4.4: making it multiaxially drivable
 
 
-Step 4: gíving it autonomy
+Step 5: gíving it autonomy
   
-  4.1: Object and obstacle detection
+  5.1: Object and obstacle detection
   
-  4.2: AI model training*
+  5.2: AI model training*
 
   
   *Things I know of but have very little idea how to execute
