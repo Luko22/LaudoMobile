@@ -1,6 +1,6 @@
 This repo is for a robotic car project I am doing on my own
 
-I plan to gradually give the vehicle automated characteristics
+I plan to gradually give the vehicle more features, hoping to eventually get to autonomy
 
 
 Step 1: Make it functional
@@ -14,24 +14,32 @@ Step 1: Make it functional
   1.4: Uploading simple iterated code
 
 
-Step 2: Making it controllable
+Step 2: Make it drivable tethered 
 
-  2.1: control it tethered
+  2.1: attach joystick
   
-  2.2: make it wireless
+  2.2: make it responsive
 
-  2.3: make it responsive
+  2.3: make it drivable
+
+Step 3: Make it wirelessly drivable
+
+  3.1: pick and use wireless communication medium
+  
+  3.2: Create controller
+  
+  3.3: allow controller ot transmit and vehicle to receive
 
 
-Step 3: giving it senses 
+Step 4: giving it senses 
   
-  3.1: spacial awareness and obstacle detection
+  4.1: spacial awareness and obstacle detection
   
-  3.2: environmental awareness
+  4.2: environmental awareness
   
-  3.3: visual awareness
+  4.3: visual awareness
   
-  3.4: making it multiaxially drivable
+  4.4: making it multiaxially drivable
 
 
 Step 4: gíving it autonomy
