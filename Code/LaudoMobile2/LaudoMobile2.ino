@@ -78,8 +78,8 @@ delay(50);
     analogWrite(enB, driveD);
   delay(5);
     // motor A CW ^ (forward)
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
     // motor B CW ^ (forward)
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
@@ -90,8 +90,8 @@ delay(50);
     analogWrite(enB, driveB);
   delay(5);
    // motor A CCW (backwards)
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, LOW);
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
   // motor B CCW (backwards)
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
@@ -113,8 +113,8 @@ delay(50);
     analogWrite(enB, driveR);
   
     // motor A CCW
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, LOW);
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
 
     // motor B CW ^
     digitalWrite(in3, HIGH);
@@ -126,8 +126,8 @@ delay(50);
     analogWrite(enB, driveL);
   
    // motor A CW ^ 
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
 
   // motor B CCW 
     digitalWrite(in3, LOW);

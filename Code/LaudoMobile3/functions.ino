@@ -43,62 +43,26 @@ void initDrive(int s){
 }
 
 
-//function
-void directionControl() {
-    // Set motors to maximum speed
-    // PWM value ranges from 0 to 255
-    analogWrite(enA, 255);
-    analogWrite(enB, 255);
+String httpGETRequest(const char* serverName) {
+  WiFiClient client;
+  HTTPClient http;
+  // Your Domain name with URL path or IP address with path
+  http.begin(client, serverName);
+  // Send HTTP POST request
+  int httpResponseCode = http.GET();
+  String payload = "--"; 
 
-    // Turn on motor A & B
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, HIGH);
-    digitalWrite(in4, LOW);
-    delay(2000);
+  if (httpResponseCode>0) {
+    // Serial.print("HTTP Response code: ");
+    // Serial.println(httpResponseCode);
+    payload = http.getString();
+  }
+  else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
 
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, HIGH);
-    delay(2000);
-	
-    // Turn off motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
+  // Free resources
+  http.end();
+  return payload;
 }
-
-
-void speedControl() {
-    // Turn on motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, HIGH);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, HIGH);
-	
-    for (int i = 0; i < 256; i++) {
-        analogWrite(enA, i);
-        analogWrite(enB, i);
-        delay(20);
-    }
-	
-    for (int i = 255; i >= 0; --i) {
-        analogWrite(enA, i);
-        analogWrite(enB, i);
-        delay(20);
-    }
-	
-    // Now turn off motors
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
-}
-
-/*
-Concerns:
-- very little pmw pins left on arduino
-- 
-*/
