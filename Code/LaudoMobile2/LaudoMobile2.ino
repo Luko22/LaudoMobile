@@ -19,6 +19,7 @@ int in4 = 10;
 //add joysick macros
 #define JoyX A0
 #define JoyY A1
+/*if values get interfered when joysrtick readings get to 1023*/
 
 int joyposV, joyposH;
 
@@ -42,7 +43,7 @@ void setup() {
     digitalWrite(in4, LOW);
 
     delay(1000);
-    initDrive(100);
+    initDrive(90);
 
 }
 
@@ -50,21 +51,25 @@ void loop() {
   joyposV = analogRead(JoyX);
   joyposH = analogRead(JoyY);
   
-  int driveD = map(joyposV, 400, 0, 0, 255);
-  int driveB = map(joyposV, 700, 1024, 0, 255);
+  int driveD = map(joyposV, 400, 0, 90, 255);
+  int driveB = map(joyposV, 700, 1024, 90, 255);
 
-  int driveR = map(joyposH, 200, 0, 0, 250);
-  int driveL = map(joyposH, 700, 1024, 0, 250);
+  int driveR = map(joyposH, 400, 0, 90, 255);
+  int driveL = map(joyposH, 700, 1024, 90, 255);
 delay(50);
 
 
-  Serial.print(joyposH);
-  Serial.print("  |  ");
-  // Serial.print(joyposV);
-  // Serial.print("  |  ");
-  Serial.print(driveL);
-  Serial.print("  |  ");
-  Serial.println(driveR);
+ Serial.print(joyposV);
+    Serial.print("  |  ");
+    Serial.print(driveD);
+    Serial.print("  |  ");
+    Serial.print(driveB);
+    Serial.print("  |||  ");
+    Serial.print(joyposH);
+    Serial.print("  |  ");
+    Serial.print(driveL);
+    Serial.print("  |  ");
+    Serial.println(driveR);
   
   //Forward and Back
   if(joyposV<400){
@@ -102,7 +107,7 @@ delay(50);
 
 
 //Rotation
-  if(joyposH<200){
+  if(joyposH<400){
     //rot R
     // analogWrite(enA, driveR);
     analogWrite(enB, driveR);
@@ -136,7 +141,7 @@ delay(50);
   //   digitalWrite(in3, LOW);
   //   digitalWrite(in4, LOW);
   //   delay(50);
-  // }
+  // } //this is superfluous
 
 }
 
