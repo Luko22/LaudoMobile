@@ -2,14 +2,14 @@
 /*Read and took information from:
 https://electrosome.com/interfacing-l298n-motor-driver-arduino-uno/
 */
-
+//ESP32 38 pnis board
 #include <WiFi.h>
 
 
 // Set your access point network credentials
 const char* ssid = "ROGspot";
 const char* password = "Kltown5.";
-const char* host = "192.168.137.156"; // IP address of the Arduino Uno WiFi board
+const char* host = "192.168.137.174"; // IP address of the Arduino Uno WiFi board
 // joysick1
 const int JoyX = A0;
 const int JoyY = A3;
@@ -28,7 +28,7 @@ int joyposH;
 
 // only runs once
 void setup() {
-  Serial.begin(115200);  
+  // Serial.begin(115200);  
   pinMode(JoyY, INPUT);
   pinMode(JoyX, INPUT);
   
@@ -55,9 +55,9 @@ void loop() {
         client.println(joyposH);      
     }
   
-    Serial.print(joyposV);
-    Serial.print("  |||  ");
-    Serial.println(joyposH);
+    // Serial.print(joyposV);
+    // Serial.print("  |||  ");
+    // Serial.println(joyposH);
     delay(50);
 }
 

@@ -2,6 +2,8 @@
 /*Read and took information from:
 https://electrosome.com/interfacing-l298n-motor-driver-arduino-uno/
 */
+
+// arduino uno wifi board
 #include <WiFi.h> // Include the WiFiNINA library
 
 char ssid[] = "ROGspot";    //  your network SSID (name)
@@ -34,7 +36,7 @@ int joyposV, joyposH;
 
 //only runs once
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(250000);
     // Connect to WiFi network
     while (status != WL_CONNECTED) {
         Serial.print("Attempting to connect to SSID: ");
@@ -91,6 +93,7 @@ void loop() {
     String hString = data.substring(spaceIndex + 1);
     joyposV = vString.toInt();
     joyposH = hString.toInt();
+    delay(5);
   }
   // joyposV = analogRead(JoyX);
   // joyposH = analogRead(JoyY);
@@ -100,30 +103,29 @@ void loop() {
   int driveD = map(joyposV, decLim, 0, 90, 255);
   int driveB = map(joyposV, incLim, 4095, 90, 255);
 
-  int driveR = map(joyposH, incLim, 0, 90, 255);
-  int driveL = map(joyposH, incLim, 4095, 90, 255);
+  int driveR = map(joyposH, incLim, 0, 90, 100);
+  int driveL = map(joyposH, incLim, 4095, 90, 100);
 
-delay(50);
+  delay(5);
 
 
-  Serial.print(joyposV);
-  Serial.print("  |  ");
-  Serial.print(driveD);
-  Serial.print("  |  ");
-  Serial.print(driveB);
-  Serial.print("  |||  ");
-  Serial.print(joyposH);
-  Serial.print("  |  ");
-  Serial.print(driveL);
-  Serial.print("  |  ");
-  Serial.println(driveR);
+  // Serial.print(joyposV);
+  // Serial.print("  |  ");
+  // Serial.print(driveD);
+  // Serial.print("  |  ");
+  // Serial.print(driveB);
+  // Serial.print("  |||  ");
+  // Serial.print(joyposH);
+  // Serial.print("  |  ");
+  // Serial.print(driveL);
+  // Serial.print("  |  ");
+  // Serial.println(driveR);
   
   //Forward and Back
   if(joyposV<decLim){
     //map then drive forwards
     analogWrite(enA, driveD);
     analogWrite(enB, driveD);
-  delay(5);
     // motor A CW ^ (forward)
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
@@ -135,7 +137,6 @@ delay(50);
       //moves back
     analogWrite(enA, driveB);
     analogWrite(enB, driveB);
-  delay(5);
    // motor A CCW (backwards)
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
