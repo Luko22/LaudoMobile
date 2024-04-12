@@ -4,17 +4,20 @@ https://electrosome.com/interfacing-l298n-motor-driver-arduino-uno/
 */
 
 #include <WiFi.h>
-#include "ESPAsyncWebServer.h"
+
 
 // Set your access point network credentials
-const char* ssid = "LukoMobile";
-const char* password = "KtownGetDown5";
-// Create AsyncWebServer object on port 80
-AsyncWebServer server(80);
-
-// add joystick macros
-#define JoyX A0 // GPIO34 
-#define JoyY A1// GPIO35 
+const char* ssid = "ROGspot";
+const char* password = "Kltown5.";
+const char* host = "192.168.137.156"; // IP address of the Arduino Uno WiFi board
+// joysick1
+const int JoyX = A0;
+const int JoyY = A3;
+//camerajoy
+const int camX = A10;
+const int camY = A11;
+// #define JoyX 25// GPIO35 
+// #define JoyY 25// GPIO35 
 /*JUST FIGURED IT NOW. the 2 input pins in the esp32 are right 
 next to each other and it looks like when one of them was 4095, 
 the other one was electromagnetically interferred. 
@@ -25,44 +28,37 @@ int joyposH;
 
 // only runs once
 void setup() {
-    
+  Serial.begin(115200);  
   pinMode(JoyY, INPUT);
   pinMode(JoyX, INPUT);
   
+  WiFi.begin(ssid, password);
 
-  Serial.begin(9600);
-  Serial.println();
-  // Setting the ESP as an access point
-  Serial.print("Setting AP (Access Point)…");
-  // Remove the password parameter, if you want the AP (Access Point) to be open
-  WiFi.softAP(ssid, password);
-
-  IPAddress IP = WiFi.softAPIP();
-  Serial.println("AP IP address: ");
-  Serial.println(IP);
-
-    delay(50);
+  while (WiFi.status() != WL_CONNECTED) {
+        delay(50);
+        Serial.print(".");
+    }
+    Serial.println("");
+    Serial.println("WiFi connected");
+    delay(1000);
 }
+
 
 void loop() {
   joyposV = analogRead(JoyX);
   joyposH = analogRead(JoyY);
-
-  server.on("/joyposV", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", readAnPinVert().c_str());
-  });
-  server.on("/joyposH", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", readAnPinHori().c_str());
-  });
-
-  // Start server
-  server.begin();
-
-   Serial.print(joyposV);
+  // Send joystick values over WiFi to Arduino Uno WiFi board
+    WiFiClient client;
+    if (client.connect(host, 80)) {
+        client.print(joyposV);
+        client.print(" ");
+        client.println(joyposH);      
+    }
+  
+    Serial.print(joyposV);
     Serial.print("  |||  ");
     Serial.println(joyposH);
-
-  delay(50);
+    delay(50);
 }
 
 
