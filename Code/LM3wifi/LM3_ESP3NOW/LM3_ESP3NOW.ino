@@ -2,57 +2,55 @@
 /*Read and took information from:
 https://electrosome.com/interfacing-l298n-motor-driver-arduino-uno/
 */
+#include <esp_now.h>
+#include <WiFi.h>
+// Must match the receiver structure
+typedef struct struct_message {
+  int joyposV;
+  int joyposH;
+  
+  // float c;
+  // bool d;
+} struct_message;
 
-// arduino uno wifi board
-#include <WiFi.h> // Include the WiFiNINA library
-
-char ssid[] = "ROGspot";    //  your network SSID (name)
-char pass[] = "Kltown5.";   // your network password
-int status = WL_IDLE_STATUS;    // the WiFi status
-
-WiFiServer server(80);  // Create a WiFi server on port 80
-
+// Create a struct_message called myData
+struct_message myData;
+// callback function that will be executed when data is received
+void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
+  memcpy(&myData, incomingData, sizeof(myData));
+  // Serial.print("Bytes received: ");
+  // Serial.print(myData.joyposV);
+  // Serial.print("  |||  ");
+  // Serial.println(myData.joyposH);
+}
 /* Motor A connections: 
 in1 and in2 pins are used to control the direction of Motor A
-connected to pin 13, pin 12*/
-int enA = 9;
-int in1 = 13;
-int in2 = 12;
+connected to pin 13, pin 12 */
+int enA = 32; // GPIO32
+int in1 = 33; // GPIO33
+int in2 = 25; // GPIO25
 /* Motor B connections: 
 in3 and in4 pins are used to control the direction of Motor B
-connected to pin 11, pin 10*/
-int enB = 3;
-int in3 = 11;
-int in4 = 10;
+connected to pin 11, pin 10 */
+int enB = 27; // GPIO27 
+int in3 = 14; // GPIO14 
+int in4 = 12 ; // GPIO12
 
-//add joysick macros
-// #define JoyX A0
-// #define JoyY A1
-// const int JoyX = A0;
-// const int JoyY = A3;
-/*if values get interfered when joysrtick readings get to 1023*/
 
-int joyposV, joyposH;
-
-//only runs once
+// only runs once
 void setup() {
-    Serial.begin(250000);
-    // Connect to WiFi network
-    while (status != WL_CONNECTED) {
-        Serial.print("Attempting to connect to SSID: ");
-        Serial.println(ssid);
-        status = WiFi.begin(ssid, pass);
-        delay(5000);  // Wait 5 seconds for connection
+    Serial.begin(9600);
+    // Set device as a Wi-Fi Station
+    WiFi.mode(WIFI_STA);
+    // Init ESP-NOW
+    if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
     }
-
-    Serial.println("Connected to WiFi");
-    // Print Arduino Uno WiFi board's IP address
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.localIP());
-    delay(200);
-
-    // Start the server
-    server.begin();
+    // Once ESPNow is successfully Init, we will register for recv CB to
+    // get recv packer info
+    esp_now_register_recv_cb(OnDataRecv);
+    
     // pinMode(JoyX, INPUT);
     // pinMode(JoyY, INPUT);
 
@@ -62,7 +60,7 @@ void setup() {
     pinMode(in2, OUTPUT);
     pinMode(in3, OUTPUT);
     pinMode(in4, OUTPUT);
-	
+
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
@@ -73,59 +71,40 @@ void setup() {
 }
 
 void loop() {
+  int joyposV = myData.joyposV;
+  int joyposH = myData.joyposH;
 
-  // Check if a client has connected
-  WiFiClient client = server.available();
-  if (!client) {
-      return;
-  }
 
-  // Wait until the client sends some data
-  while (!client.available()) {
-      delay(1);
-  }
-
-  // Read the joystick values sent over WiFi
-  String data = client.readStringUntil('\n');
-  int spaceIndex = data.indexOf(' ');
-  if (spaceIndex != -1) {
-    String vString = data.substring(0, spaceIndex);
-    String hString = data.substring(spaceIndex + 1);
-    joyposV = vString.toInt();
-    joyposH = hString.toInt();
-    delay(5);
-  }
-  // joyposV = analogRead(JoyX);
-  // joyposH = analogRead(JoyY);
   int decLim = 1800;
   int incLim = 3000;
 
   int driveD = map(joyposV, decLim, 0, 90, 255);
   int driveB = map(joyposV, incLim, 4095, 90, 255);
 
-  int driveR = map(joyposH, incLim, 0, 90, 100);
-  int driveL = map(joyposH, incLim, 4095, 90, 100);
+  int driveR = map(joyposH, incLim, 0, 90, 120);
+  int driveL = map(joyposH, incLim, 4095, 90, 120);
 
-  delay(5);
+delay(50);
 
 
-  // Serial.print(joyposV);
-  // Serial.print("  |  ");
-  // Serial.print(driveD);
-  // Serial.print("  |  ");
-  // Serial.print(driveB);
-  // Serial.print("  |||  ");
-  // Serial.print(joyposH);
-  // Serial.print("  |  ");
-  // Serial.print(driveL);
-  // Serial.print("  |  ");
-  // Serial.println(driveR);
+  Serial.print(joyposV);
+  Serial.print("  |  ");
+  Serial.print(driveD);
+  Serial.print("  |  ");
+  Serial.print(driveB);
+  Serial.print("  |||  ");
+  Serial.print(joyposH);
+  Serial.print("  |  ");
+  Serial.print(driveL);
+  Serial.print("  |  ");
+  Serial.println(driveR);
   
   //Forward and Back
   if(joyposV<decLim){
     //map then drive forwards
     analogWrite(enA, driveD);
     analogWrite(enB, driveD);
+  
     // motor A CW ^ (forward)
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
@@ -137,6 +116,7 @@ void loop() {
       //moves back
     analogWrite(enA, driveB);
     analogWrite(enB, driveB);
+  
    // motor A CCW (backwards)
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
