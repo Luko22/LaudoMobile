@@ -16,7 +16,7 @@ Step 1: Make it functional
 
 Step 2: Make it drivable tethered 
 
-  2.1: attach joystick
+  2.1: attach a joystick
   
   2.2: make it responsive
 
@@ -24,12 +24,17 @@ Step 2: Make it drivable tethered
 
 Step 3: Make it wirelessly drivable
 
-  3.1: pick and use wireless communication medium
+  3.1: pick and use a wireless communication medium
   
   3.2: Create controller
   
-  3.3: allow controller ot transmit and vehicle to receive
+  3.3: allow the controller to transmit and the vehicle to receive
 
+  https://github.com/Luko22/LaudoMobile/assets/89535176/00004f4d-19a3-4765-bba2-f056553a8e8d
+
+  3.4: added a tilt remote controller
+  
+https://github.com/Luko22/LaudoMobile/assets/89535176/03d8796a-0619-454c-b103-65a3d6db789b
 
 Step 4: giving it senses 
   
