@@ -1,5 +1,6 @@
 //Step 3: making it wireless
 //ESP32 38 pnis board
+//This code allows for a gyroscope to be used as a controller to the LM vehicle 
 #include <esp_now.h>
 #include <WiFi.h>
 
@@ -11,7 +12,6 @@ uint8_t broadcastAddress[] = {0x08, 0x3A, 0x8D, 0x90, 0x33, 0xA8};
 typedef struct struct_message {
   int joyposV;
   int joyposH;
-  
   // float c;
   // bool d;
 } struct_message;
