@@ -157,6 +157,7 @@ void loop() {
   int rotZ = g.gyro.z*100;
 
 // MPU6050
+
   if (accX>300){
     myData.joyposV = map(accX, 300, 1000, 1800, 0);
   }else if(accX<-300){
@@ -165,10 +166,10 @@ void loop() {
     myData.joyposV = 2000;
   }
 
-  if (rotZ>3){
+  if (rotZ>300){
     myData.joyposH = map(rotZ, -80, -300, 1800, 0);
-  }else if(accX<-3){
-    myData.joyposH = map(rotZ, 120, 300, 3000, 4095);
+  }else if(rotZ<-300){
+    myData.joyposH = map(rotZ, 80, 300, 3000, 4095);
   }else{
     myData.joyposH = 2000;
   }
